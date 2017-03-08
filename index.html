@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<textarea id='textarea_id' style="height:98vh; width:100%; color:blue; text-align:center; font-size:50px">
+		<textarea id='textarea_id' style="height:90vh; width:100%; color:blue; text-align:center; font-size:50px">
 Hallelujah
 Leonard Cohen
 
@@ -61,14 +61,53 @@ Hallelujah
 Hallelujah
 
 		</textarea>
+		<p id="debug"></p>
 	</body>
 </html>
 <script>
+	// Variables
+	var scroll = false;
 	var textarea = document.getElementById('textarea_id');
-	setInterval(function(){
-		//textarea.value+=Math.random()+'\n';
-	}, 1000);
-	setInterval(function(){
+	var t1, t2, t3;
+	var count = 0;
+	var speed = 0;
+	t1 = (new Date()).getTime();
+	
+	// Keypress logic
+	document.body.onkeyup = function(e){
+		if(e.keyCode == 32){
+			t3 = t2;
+			t2 = t1;
+			t1 = (new Date()).getTime();
+			count++;
+			if(count > 2){
+			scroll = true;
+				speed = ((t1-t2)+(t2-t3))/20;	// Arbitrary division to demonstrate speed
+				run();
+			}
+			if((t1-t2) > 2000 && scroll){	
+				scroll = false;
+				count = 0;
+			}
+		}
+	} 
+	
+	// Scrolling Function
+	function run(){
 		textarea.scrollTop += 1;
-	}, 25);
+		if(scroll){
+			window.setTimeout(run, speed); 
+		}
+	}
+	
+	// Debugging Info
+	setInterval(function(){
+		document.getElementById("debug").innerHTML = "speed:"+speed+"\ncount: "+count+"\nscroll: "+scroll;
+		if (scroll){
+			//textarea.scrollTop += 1;
+			var dif = Number(t2) - Number(t1);
+			//textarea.value+=(t1-t2)+' '+count+'\n';
+			//textarea.scrollTop = textarea.scrollHeight;
+		}
+	}, (10));
 </script>
