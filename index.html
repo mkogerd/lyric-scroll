@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+	</head>
 	<body>
-		<textarea id='textarea_id' style="height:90vh; width:100%; color:blue; text-align:center; font-size:50px">
+		<textarea id='textarea_id'>
 Hallelujah
 Leonard Cohen
 
@@ -68,27 +71,30 @@ Hallelujah
 	// Variables
 	var scroll = false;
 	var textarea = document.getElementById('textarea_id');
-	var t1, t2, t3;
-	var count = 0;
-	var speed = 0;
-	t1 = (new Date()).getTime();
+	var lineHeight = parseInt(window.getComputedStyle(textarea).getPropertyValue('line-height'), 10); // Line height in pixels
+	var tstart, tend, count, bpm, tpb, tpl;
+
 	
 	// Keypress logic
 	document.body.onkeyup = function(e){
-		if(e.keyCode == 32){
-			t3 = t2;
-			t2 = t1;
-			t1 = (new Date()).getTime();
-			count++;
-			if(count > 2){
-			scroll = true;
-				speed = ((t1-t2)+(t2-t3))/20;	// Arbitrary division to demonstrate speed
-				run();
-			}
-			if((t1-t2) > 2000 && scroll){	
+		if(e.keyCode == 66){						// 'b' key takes in tempo
+			if((new Date()).getTime()-tend > 2000 || !tstart){ // If first tap or over 2 seconds has ellapsed since last tempo tap, grab a new start time
+				tstart= (new Date()).getTime();
+				tend = tstart;
 				scroll = false;
 				count = 0;
 			}
+			else 
+				tend = (new Date()).getTime();
+			count++;
+			tpb = (tend-tstart)/count;				// Calculate time per beat (ms)
+			bpm = 60*1000/tpb;						// Calculate beats per minute
+			tpl = tpb*4;							// Calculate beats per line
+		}
+		if(e.keyCode == 32){						// 'space' key toggles scrolling
+			scroll = !scroll;
+			if(scroll)
+				run();
 		}
 	} 
 	
@@ -96,13 +102,13 @@ Hallelujah
 	function run(){
 		textarea.scrollTop += 1;
 		if(scroll){
-			window.setTimeout(run, speed); 
+			window.setTimeout(run, tpl/lineHeight);	// Traverse one line per 'Time per line"
 		}
 	}
 	
 	// Debugging Info
 	setInterval(function(){
-		document.getElementById("debug").innerHTML = "speed:"+speed+"\ncount: "+count+"\nscroll: "+scroll;
+		document.getElementById("debug").innerHTML = "\ncount: "+count+"\nscroll: "+scroll+"\nbpm: "+bpm + "\nmilliseconds per beat: "+tpb+"\nmilliseconds per line: "+tpl+"\nLine-Height: "+lineHeight+"px";
 		if (scroll){
 			//textarea.scrollTop += 1;
 			var dif = Number(t2) - Number(t1);
