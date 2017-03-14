@@ -1,15 +1,36 @@
+body {
+	background-color:darkgray;
+}
+
 textarea {
-	height:85vh; 
-	width:100%; 
-	color:blue; 
-	text-align:center;
-	font-size:4em;
-	line-height:1.2;
+	height: 85vh; 
+	width: 100%; 
+	color: blue; 
+	text-align: center;
+	font-size: 4em;
+	line-height: 1.2;
 }
 .stats {
-	color:black;
-	width:25vw;
-	height:100%; 
-	display:inline-block;
+	color: black;
+	width: 24vw;
+	height: 100%; 
+	display: inline-block;
 	vertical-align: text-top;
+}
+
+.statsform {
+	text-align:center;
+}
+
+.metronome {
+  width: 100%;
+  height: 10vh;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  background-color: gray;
+}
+
+#speed {
+	width: 50%;
+	text-align: center;
 }
