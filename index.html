@@ -64,7 +64,18 @@ Hallelujah
 Hallelujah
 
 		</textarea>
-		<p id="debug"></p>
+		<div class="stats">
+			<form>
+				Beats per measure:
+				<input type="text" id="beatspermeasure" name="beatspermeasure" value="4" onchange="updateBeatsPerMeasure()">
+			</form>
+		</div>
+		<div class="stats" id="debug1">
+		</div>
+		<div class="stats" id="debug2">
+		</div>
+		
+		
 	</body>
 </html>
 <script>
@@ -73,6 +84,7 @@ Hallelujah
 	var textarea = document.getElementById('textarea_id');
 	var lineHeight = parseInt(window.getComputedStyle(textarea).getPropertyValue('line-height'), 10); // Line height in pixels
 	var tstart, tend, count, bpm, tpb, tpl;
+	var beatspermeasure = document.getElementById('beatspermeasure').value;
 
 	
 	// Keypress logic
@@ -89,12 +101,13 @@ Hallelujah
 			count++;
 			tpb = (tend-tstart)/count;				// Calculate time per beat (ms)
 			bpm = 60*1000/tpb;						// Calculate beats per minute
-			tpl = tpb*4;							// Calculate beats per line
 		}
 		if(e.keyCode == 32){						// 'space' key toggles scrolling
 			scroll = !scroll;
-			if(scroll)
+			if(scroll){
+				tpl = tpb*beatspermeasure;			// Calculate time per line
 				run();
+			}
 		}
 	} 
 	
@@ -102,18 +115,23 @@ Hallelujah
 	function run(){
 		textarea.scrollTop += 1;
 		if(scroll){
-			window.setTimeout(run, tpl/lineHeight);	// Traverse one line per 'Time per line"
+			window.setTimeout(run, tpl/lineHeight);	// Traverse one line per "Time per line"
 		}
+	}
+	
+	function updateBeatsPerMeasure(){
+		beatspermeasure = document.getElementById('beatspermeasure').value;	// Update beats per measure
 	}
 	
 	// Debugging Info
 	setInterval(function(){
-		document.getElementById("debug").innerHTML = "\ncount: "+count+"\nscroll: "+scroll+"\nbpm: "+bpm + "\nmilliseconds per beat: "+tpb+"\nmilliseconds per line: "+tpl+"\nLine-Height: "+lineHeight+"px";
+		document.getElementById("debug1").innerHTML = "count: "+count+"<br>scroll: "+scroll+"<br>Line-Height: "+lineHeight+"px";
+		document.getElementById("debug2").innerHTML = "bpm: "+bpm + "<br>milliseconds per beat: "+tpb+"<br>milliseconds per line: "+tpl+"<br>Beats per measure: "+beatspermeasure;
 		if (scroll){
 			//textarea.scrollTop += 1;
 			var dif = Number(t2) - Number(t1);
 			//textarea.value+=(t1-t2)+' '+count+'\n';
 			//textarea.scrollTop = textarea.scrollHeight;
 		}
-	}, (10));
+	}, 10);
 </script>
