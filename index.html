@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="normalize.css">
+		<link rel="stylesheet" type="text/css" href="responsive.css">
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	</head>
 	<body>
-		<textarea id='textarea_id'>
+		<textarea class="lyric-area" id='textarea_id'>
 Hallelujah
 Leonard Cohen
 
@@ -62,41 +64,54 @@ Hallelujah
 Hallelujah
 Hallelujah
 Hallelujah
-
 		</textarea>
-		<div class="stats statsform">
-			<form>
-				Beats per measure:
-				<input type="text" id="beatspermeasure" name="beatspermeasure" value="4" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()"><br>
-				Beats per minute:
-				<input type="text" id="bpm" name="bpm" value="60" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()"><br>
+
+		<!-- Metronome Area -->
+		<div class="metronome" id="metronome"></div>
+
+		<div class="container">
+			<!-- Controls Area -->
+			<form class="controls">
+				<label for="beatspermeasure"><h3>Beats per measure</h3></label>
+				<input type="text" id="beatspermeasure" name="beatspermeasure" value="4" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()">
+
+				<label for="bpm"><h3>Beats per minute</h3></label>
+				<input type="text" id="bpm" name="bpm" value="60" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()">
+
+				<label for="speed"><h3>Speed</h3></label>
 				<input type="range" id="speed" value="75" min="1" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()">
 			</form>
-			<div class="popup" onclick="info()">Info
+
+			<!-- Info Area -->
+			<div class="popup" onclick="info()"><h3>Info</h3>
 				<span class="popuptext" id="myPopup">
-				<p>
-					<u><b>Controls</b></u><br>
-					<i>Space</i> - toggle scrolling<br><i>b</i> - tap-in tempo<br><i>slider</i> - scroll at a percentage of the designated speed
-				</p>
-				<p>
-					<u><b>Notes</b></u><br> 
-					Paste lyrics of your choosing in the text area. At 100% speed, lines will be traversed at a speed of one line per measure. Stop and restart scrolling for changes to take effect. Tap-in key functionality resets after 2 seconds. Speed is set to 75% by default.
-				</p>
+					<p>
+						<u><b>Controls</b></u><br>
+						<i>Space</i> - toggle scrolling<br><i>b</i> - tap-in tempo<br><i>slider</i> - scroll at a percentage of the designated speed
+					</p>
+					<p>
+						<u><b>Notes</b></u><br> 
+						Paste lyrics of your choosing in the text area. At 100% speed, lines will be traversed at a speed of one line per measure. Stop and restart scrolling for changes to take effect. Tap-in key functionality resets after 2 seconds. Speed is set to 75% by default.
+					</p>
 				</span>
 			</div>
-		</div>
-		<div class="stats" id="debug1">
-		</div>
-		<div class="stats" id="debug2">
-		</div>
-		<div class="stats" id="debug3">
-			<div class="metronome" id="metronome"></div>
-		</div>
-		
-		
-		
+
+			<!-- Statistics Area -->
+			<div class="statistics">
+				<div class="statistics-text">
+					<div id="debug1">
+					</div>
+					<div id="debug2">
+					</div>
+					<div id="debug3">	
+					</div>
+				</div>
+			</div>
+
+		</div>	
 	</body>
 </html>
+
 <script>
 	// Variables
 	var scroll = false;
