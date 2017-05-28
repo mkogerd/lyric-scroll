@@ -141,12 +141,22 @@ Hallelujah
 		if(e.keyCode == 32){						// 'space' key toggles scrolling
 			scroll = !scroll;
 			if(scroll){
-			metronome();
+				metronome();
 				tpl = tpb*beatspermeasure;			// Calculate time per line
 				run();
 			}
 		}
 	} 
+
+	// Start/Stop Button
+	document.getElementById('metronome').addEventListener('click', function() {
+	    scroll = !scroll;
+		if(scroll) {
+			metronome();
+			tpl = tpb*beatspermeasure;	// Calculate time per line
+			run();
+		}
+	}, false);
 	
 	// Scrolling Function
 	function run(){
