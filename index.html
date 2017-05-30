@@ -82,30 +82,24 @@ Hallelujah
 				<input type="range" id="speed" value="75" min="1" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()">
 			</form>
 
-			<!-- Info Area -->
-			<div class="popup" onclick="info()"><h3>Info</h3>
-				<span class="popuptext" id="myPopup">
-					<p>
-						<u><b>Controls</b></u><br>
-						<i>Space</i> - toggle scrolling<br><i>b</i> - tap-in tempo<br><i>slider</i> - scroll at a percentage of the designated speed
-					</p>
-					<p>
-						<u><b>Notes</b></u><br> 
-						Paste lyrics of your choosing in the text area. At 100% speed, lines will be traversed at a speed of one line per measure. Stop and restart scrolling for changes to take effect. Tap-in key functionality resets after 2 seconds. Speed is set to 75% by default.
-					</p>
-				</span>
+			<div class="info">
+				<h3>Controls</h3>
+				<p>
+					<i>Space</i> - toggle scrolling<br><i>b</i> - tap-in tempo<br><i>slider</i> - scroll at a percentage of the designated speed
+				</p>
+				<h3>Notes</h3> 
+				<p>
+					Paste lyrics of your choosing in the text area. At 100% speed, lines will be traversed at a speed of one line per measure. Stop and restart scrolling for changes to take effect. Tap-in key functionality resets after 2 seconds. Speed is set to 75% by default.
+				</p>
 			</div>
+
+			<div class="space"></div>
 
 			<!-- Statistics Area -->
 			<div class="statistics">
-				<div class="statistics-text">
-					<div id="debug1">
-					</div>
-					<div id="debug2">
-					</div>
-					<div id="debug3">	
-					</div>
-				</div>
+				<h3>Statistics</h3>
+				<!--p element is filled out by javascript -->
+				<p id="debug1"></p>
 			</div>
 
 		</div>	
@@ -206,8 +200,7 @@ Hallelujah
 
 	// Debugging Info
 	setInterval(function(){
-		document.getElementById("debug1").innerHTML = "count: "+count+"<br>scroll: "+scroll+"<br>Line-Height: "+lineHeight+"px"+"<br>Speed: "+percentSpeed+"%";
-		document.getElementById("debug2").innerHTML = "bpm: "+bpm + "<br>milliseconds per beat: "+tpb+"<br>milliseconds per line: "+tpl+"<br>Beats per measure: "+beatspermeasure+"<br>ms per beat: "+tpb;
+		document.getElementById("debug1").innerHTML = "count: "+count+"<br>scroll: "+scroll+"<br>Line-Height: "+lineHeight+"px"+"<br>Speed: "+percentSpeed+"%"+"<br>bpm: "+bpm + "<br>milliseconds per beat: "+tpb+"<br>milliseconds per line: "+tpl+"<br>Beats per measure: "+beatspermeasure+"<br>ms per beat: "+tpb;
 		if (scroll){
 			//textarea.scrollTop += 1;
 			var dif = Number(t2) - Number(t1);

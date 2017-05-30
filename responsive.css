@@ -2,6 +2,7 @@
 ================================================= */
 .container {
 	width:280px;
+	text-align: center;
 	display: grid;
 	grid-gap: 20px;
 	grid-template:
@@ -20,13 +21,7 @@
 @media (min-width:480px) {
 	.container {
 		width: 450px;
-		grid-column-gap: 30px;
-		grid-row-gap: 0px;
-		grid-template:
-			"controls info"
-			"controls statistics"
-			/ 1fr 1fr;
-			;
+
 	}
 } 
 /* Tablet: 768px.
@@ -34,7 +29,14 @@
 @media (min-width: 768px) {
 	.container{
 		width: 738px;
+		text-align: left;
 		grid-gap: 40px;
+		grid-row-gap: 0px;
+		grid-template:
+			"controls info statistics"
+			/ 1fr 1fr 1fr;
+			;
+		
 	}
 }
 
