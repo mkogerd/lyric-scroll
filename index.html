@@ -143,7 +143,7 @@ Hallelujah
 	} 
 
 	// Start/Stop Button
-	document.getElementById('metronome').addEventListener('click', function() {
+	document.getElementById('metronome').addEventListener('mouseup', function() {
 	    scroll = !scroll;
 		if(scroll) {
 			metronome();
@@ -182,20 +182,14 @@ Hallelujah
 	
 	// Blink Metronome
 	function metronome(){
-		document.getElementById('metronome').style.backgroundColor="cyan";
+		document.getElementById('metronome').className="metronome metronome-on";
 		setTimeout(blink, tpb/10);
 		if(scroll){
 			window.setTimeout(metronome, tpb);	// Traverse one line per "Time per line"
 		}
 	}
 	function blink(){
-		document.getElementById('metronome').style.backgroundColor="gray";
-	}
-	
-	// When the user clicks on <div>, open the popup
-	function info() {
-		var popup = document.getElementById("myPopup");
-		popup.classList.toggle("show");
+		document.getElementById('metronome').className="metronome";
 	}
 
 	// Debugging Info

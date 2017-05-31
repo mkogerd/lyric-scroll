@@ -32,6 +32,7 @@ h3 {
     box-sizing: border-box;
     display: block;  
     border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 0px 0px 5px 5px;
     background-color: gray;
     background: linear-gradient(to top, gray, darkgray);
     height: 15vh;
@@ -40,6 +41,9 @@ h3 {
 }
 .metronome:active {
     background: linear-gradient(to bottom, gray, darkgray);
+}
+.metronome-on {
+    background: cyan;
 }
 
 /* Controls Area 

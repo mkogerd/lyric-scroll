@@ -4,7 +4,6 @@
 	width:280px;
 	text-align: center;
 	display: grid;
-	grid-gap: 20px;
 	grid-template:
 		"controls"
 		"info"
@@ -36,7 +35,6 @@
 			"controls info statistics"
 			/ 1fr 1fr 1fr;
 			;
-		
 	}
 }
 
