@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- Import Jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="normalize.css">
 		<link rel="stylesheet" type="text/css" href="responsive.css">
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
@@ -79,17 +81,17 @@ Hallelujah
 				<input type="text" id="bpm" name="bpm" value="60" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()">
 
 				<label for="speed"><h3>Speed</h3></label>
-				<input type="range" id="speed" value="75" min="1" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()">
+				<input type="range" id="speed" value="75" min="1" onchange="updateBeatsPerMeasure()">
 			</form>
 
 			<div class="info">
 				<h3>Controls</h3>
 				<p>
-					<i>Space</i> - toggle scrolling<br><i>b</i> - tap-in tempo<br><i>slider</i> - scroll at a percentage of the designated speed
+					<i>v</i> - toggle scrolling<br><i>b</i> - tap-in tempo<br><i>Speed</i> - scroll at a percentage of the designated speed
 				</p>
 				<h3>Notes</h3> 
 				<p>
-					Paste lyrics of your choosing in the text area. At 100% speed, lines will be traversed at a speed of one line per measure. Stop and restart scrolling for changes to take effect. Tap-in key functionality resets after 2 seconds. Speed is set to 75% by default.
+					Paste lyrics of your choosing in the text area. At 100% speed, lines will be traversed at a speed of one line per measure. Tap-in key functionality resets after 2 seconds. Speed is set to 75% by default.
 				</p>
 			</div>
 
@@ -115,6 +117,9 @@ Hallelujah
 	var bpm = document.getElementById('bpm').value;
 	var beatspermeasure = document.getElementById('beatspermeasure').value;
 	var percentSpeed = document.getElementById('speed').value;
+	// Timeout variables
+	var to1;	// Scrolling timeout variable
+	var to2;	// Metronome flash timeout variable
 	updateCalculations(0);							// Initialization
 	
 	// Keypress logic
@@ -132,48 +137,52 @@ Hallelujah
 			}
 			updateCalculations(1);
 		}
-		if(e.keyCode == 32){						// 'space' key toggles scrolling
-			scroll = !scroll;
-			if(scroll){
-				metronome();
-				tpl = tpb*beatspermeasure;			// Calculate time per line
-				run();
-			}
-		}
+		if(e.keyCode == 86) {toggle();}				// 'v' key toggles scrolling
 	} 
 
 	// Start/Stop Button
-	document.getElementById('metronome').addEventListener('mouseup', function() {
-	    scroll = !scroll;
+	$(".metronome").click(function() {toggle();} );
+
+	// Function that toggles scrolling and metronome
+	function toggle() {
+		clearTimeout(to1);	// Stop scrolling if currently running
+		clearTimeout(to2);	// Stop Metronome if currently running
+	    scroll = !scroll;	// toggle scrolling
 		if(scroll) {
-			metronome();
-			tpl = tpb*beatspermeasure;	// Calculate time per line
-			run();
+			metronome();	// Initiate metronome blinking
+			run();			// Initiate scrolling
 		}
-	}, false);
+	}
 	
 	// Scrolling Function
 	function run(){
 		textarea.scrollTop += 1;
+		tpl = tpb*beatspermeasure;
 		if(scroll){
-			window.setTimeout(run, (100/percentSpeed)*(tpl/lineHeight));	// Traverse one line per "Time per line"
+			to1 = window.setTimeout(run, (100/percentSpeed)*(tpl/lineHeight));	// Traverse one line per "Time per line"
 		}
 	}
 	
 	// Update Calculations (0 for input boxes, 1 for tap-input)
 	function updateCalculations(keyinput){
-			if(keyinput){
-				tpb = (tend-tstart)/count;					// Calculate time per beat (ms)
-				bpm = 60*1000/tpb;							// Calculate beats per minute
-				document.getElementById('bpm').value=bpm;	// Update input value
-			}
-			else
-				tpb = 60*1000/bpm;							// Calculate time per beat
+		clearTimeout(to1);	// Stop scrolling if currently running
+		clearTimeout(to2);	// Stop Metronome if currently running
+		if(keyinput){
+			tpb = (tend-tstart)/count;					// Calculate time per beat (ms)
+			bpm = 60*1000/tpb;							// Calculate beats per minute
+			document.getElementById('bpm').value=bpm;	// Update input value
+		}
+		else
+			tpb = 60*1000/bpm;							// Calculate time per beat
+		if(scroll) {		// If currently running, resume scrolling with new values
+			metronome();	// Initiate metronome blinking
+			run();			// Initiate scrolling
+		}
 	}
 	
 	// Update input
 	function updateBeatsPerMeasure(){
-	bpm = document.getElementById('bpm').value;
+		bpm = document.getElementById('bpm').value;
 		beatspermeasure = document.getElementById('beatspermeasure').value;	// Update beats per measure
 		percentSpeed = document.getElementById('speed').value;				// Update speed modifier
 		updateCalculations(0);
@@ -185,7 +194,7 @@ Hallelujah
 		document.getElementById('metronome').className="metronome metronome-on";
 		setTimeout(blink, tpb/10);
 		if(scroll){
-			window.setTimeout(metronome, tpb);	// Traverse one line per "Time per line"
+			to2 = window.setTimeout(metronome, tpb);	// Traverse one line per "Time per line"
 		}
 	}
 	function blink(){
