@@ -20,7 +20,6 @@ h3 {
 	color: blue; 
 	text-align: center;
 	line-height: 1.2;
-    height: 85vh;
     width: 100%;
     padding: 0;    
     border: 0;
@@ -34,7 +33,6 @@ h3 {
     border: 1px solid rgba(0, 0, 0, .2);
     background-color: gray;
     background: linear-gradient(to top, gray, darkgray);
-    height: 15vh;
     padding: 0;
     margin: 0;
 }

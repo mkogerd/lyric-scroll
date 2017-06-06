@@ -13,14 +13,23 @@
 }
 .lyric-area {
 	font-size: 2em;
-}/*
+	height: 72vh;
+}
+.metronome {
+	height: 15vh;
+}
 
 /* Large Mobile, Mobile Landscape: 480px.
 ================================================= */
 @media (min-width:480px) {
 	.container {
 		width: 450px;
-
+	}
+	.lyric-area {
+		height: 85vh;
+	}
+	.metronome {
+		height: 15vh;
 	}
 } 
 /* Tablet: 768px.
