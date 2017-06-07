@@ -76,24 +76,24 @@ Hallelujah
 		<div class="container">
 			<!-- Controls Area -->
 			<form class="controls">
-				<label for="beatspermeasure"><h3>Beats per measure</h3></label>
+				<label for="beatspermeasure"><h3>Beats Per Line</h3></label>
 				<input type="text" id="beatspermeasure" name="beatspermeasure" value="4" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()">
 
-				<label for="bpm"><h3>Beats per minute</h3></label>
+				<label for="bpm"><h3>Tempo (bpm)</h3></label>
 				<input type="text" id="bpm" name="bpm" value="60" onchange="updateBeatsPerMeasure()" oninput="updateBeatsPerMeasure()">
 
-				<label for="speed"><h3>Speed</h3></label>
+				<label for="speed"><h3>Speed%</h3></label>
 				<input type="range" id="speed" value="75" min="1" onchange="updateBeatsPerMeasure()">
 			</form>
 
 			<div class="info">
 				<h3>Controls</h3>
 				<p>
-					<i>v</i> - toggle scrolling<br><i>b</i> - tap-in tempo<br><i>Speed</i> - scroll at a percentage of the designated speed
+					<i>v</i> - toggle scrolling<br><i>b</i> - tap-in tempo<br><i>Speed</i> - scroll at a percentage of the calculated speed
 				</p>
 				<h3>Notes</h3> 
 				<p>
-					Paste lyrics of your choosing in the text area. At 100% speed, lines will be traversed at a speed of one line per measure. Tap-in key functionality resets after 2 seconds. Speed is set to 75% by default.
+					Paste lyrics of your choosing in the text area. At 100% speed, lines will be traversed at the speed of "Beats Per Line". Tap-in key functionality resets after 2 seconds. Speed is set to 75% by default.
 				</p>
 			</div>
 
@@ -205,7 +205,7 @@ Hallelujah
 
 	// Debugging Info
 	setInterval(function(){
-		document.getElementById("debug1").innerHTML = "count: "+count+"<br>scroll: "+scroll+"<br>Line-Height: "+lineHeight+"px"+"<br>Speed: "+percentSpeed+"%"+"<br>bpm: "+bpm + "<br>milliseconds per beat: "+tpb+"<br>milliseconds per line: "+tpl+"<br>Beats per measure: "+beatspermeasure+"<br>ms per beat: "+tpb;
+		document.getElementById("debug1").innerHTML = "count: "+count+"<br>scroll: "+scroll+"<br>Line-Height: "+lineHeight+"px"+"<br>Speed: "+percentSpeed+"%"+"<br>bpm: "+bpm + "<br>milliseconds per beat: "+tpb+"<br>milliseconds per line: "+tpl+"<br>Beats per line: "+beatspermeasure+"<br>ms per beat: "+tpb;
 		if (scroll){
 			//textarea.scrollTop += 1;
 			var dif = Number(t2) - Number(t1);
